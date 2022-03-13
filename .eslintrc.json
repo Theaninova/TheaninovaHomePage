@@ -1,0 +1,107 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "dist/",
+    "build/",
+    "**/*.css",
+    "**/*.scss",
+    "**/*.svg"
+  ],
+  "settings": {
+    "jsdoc": {
+      "mode": "typescript"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", "tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "tsconfig.json"
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:jsdoc/recommended",
+    "plugin:unicorn/recommended"
+  ],
+  "plugins": [
+    "eslint-plugin-unicorn",
+    "eslint-plugin-jsdoc",
+    "prettier",
+    "react",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "unicorn/filename-case": ["error", {"cases": {"pascalCase": true, "camelCase": true}}],
+    "unicorn/no-array-callback-reference": "off",
+    "unicorn/number-literal-case": "off",
+    "unicorn/prefer-object-from-entries": "off",
+    "unicorn/prevent-abbreviations": [
+      "error",
+      {
+        "replacements": {
+          "ref": false,
+          "i": false,
+          "props": false
+        }
+      }
+    ],
+    "unicorn/no-abusive-eslint-disable": "off",
+    "unicorn/no-nested-ternary": "off",
+    "unicorn/better-regex": "off",
+    "unicorn/no-null": "off",
+    "unicorn/no-array-for-each": "off",
+    "unicorn/no-array-reduce": "off",
+    "react/no-unescaped-entities": "off",
+    "jsdoc/require-jsdoc": "off",
+    "jsdoc/no-types": "error",
+    "jsdoc/require-param": "off",
+    "jsdoc/require-param-description": "error",
+    "jsdoc/check-param-names": "error",
+    "jsdoc/require-returns": "off",
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-returns-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/lines-between-class-members": [
+      "error",
+      "always"
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-explicit-any": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 2,
+        "printWidth": 110,
+        "useTabs": false,
+        "semi": false,
+        "singleQuote": true,
+        "quoteProps": "consistent",
+        "trailingComma": "all",
+        "bracketSpacing": false,
+        "arrowParens": "avoid",
+        "endOfLine": "lf"
+      }
+    ]
+  }
+}
