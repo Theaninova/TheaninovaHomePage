@@ -12,11 +12,11 @@ import {loadCompileShaders} from '../shaders/compileShader'
 import {
   theaninovaColors,
   theaninovaInterpolateState,
-  theaninovaStateMultiCircles,
+  theaninovaStateOut,
 } from '../shaders/theaninovaShaderStates'
 import {expoOut} from '../shaders/timeline'
 
-const Container = styled.div`
+const Container = styled.main`
   display: grid;
   height: 100%;
   width: 100%;
@@ -36,11 +36,9 @@ const TitleContainer = styled.div`
 const titleAnimation = keyframes`
   0% {
     font-variation-settings: ${homePageTitleFadeInFontVariation};
-    opacity: 0;
   }
   100% {
     font-variation-settings: ${homePageTitleFontVariation};
-    opacity: 1;
   }
 `
 
@@ -127,18 +125,17 @@ export default class Index extends React.Component<
     this.setState({
       shaderCanvas: new ShaderCanvas(this.state.canvasRef.current, {
         uniforms: {
-          ...theaninovaStateMultiCircles,
+          ...theaninovaStateOut,
           ...theaninovaColors,
         },
         frag: await loadCompileShaders('logos/theaninova_simple', ['sdf']),
       }),
     })
+    const begin = performance.now()
 
     const animate = () => {
       requestAnimationFrame(animate)
-      const time = (performance.now() / 10_000) % 1
-
-      theaninovaInterpolateState(time, this.state.shaderCanvas)
+      theaninovaInterpolateState(performance.now(), begin, this.state.shaderCanvas)
 
       const stamp = expoOut(
         performance.now() - this.state.hoverTimestamp,
@@ -173,7 +170,7 @@ export default class Index extends React.Component<
           <Title>Theaninova</Title>
         </TitleContainer>
         {isMobile ? (
-          <MobileVideo autoPlay loop muted src={'assets/background-fallback.webm'} />
+          <MobileVideo autoPlay loop muted playsInline src={'assets/background-fallback.webm'} />
         ) : (
           <DesktopCanvas ref={this.state.canvasRef} />
         )}

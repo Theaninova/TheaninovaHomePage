@@ -26,6 +26,31 @@ export const theaninovaStateDefault = toStrictUniforms({
   circle4RadiusOffset: -15.4,
 })
 
+export const theaninovaStateOut = toStrictUniforms({
+  margin: 3.7,
+  bloomFactor: 8,
+  pinkBlueMix: 1,
+
+  position: [0, 0],
+
+  circle1Rotation: 43.1,
+  circle1Radius: 0,
+
+  circle2Rotation: 36.1,
+  circle2Offset: [0, 0],
+  circle2RadiusOffset: -11.5,
+  circle2RadiusMix: 1,
+
+  circle3Rotation: 63.5,
+  circle3Offset: [0, 0],
+  circle3RadiusOffset: -10,
+  circle3RadiusMix: 0,
+
+  circle4Rotation: -19.8,
+  circle4Offset: [0, 0],
+  circle4RadiusOffset: -15.4,
+})
+
 export const theaninovaStateMultiCircles = toStrictUniforms({
   margin: 3.96,
   bloomFactor: 12.1,
@@ -83,12 +108,20 @@ export const theaninovaColors = toStrictUniforms({
   pinkColor: [0xe9 / 255, 0x4c / 255, 0xda / 255],
 })
 
-export function theaninovaInterpolateState(delta: number, canvas: ShaderCanvas) {
-  if (delta < 0.25) {
-    interpolateUniforms(delta, 0.25, theaninovaStateDefault, theaninovaStateMultiCircles, canvas)
-  } else if (delta < 0.75) {
-    interpolateUniforms(delta - 0.25, 0.5, theaninovaStateMultiCircles, theaninovaStateSecondEnd, canvas)
+export function theaninovaInterpolateState(time: number, begin: number, canvas: ShaderCanvas) {
+  const duration = 10_000
+  const beginDuration = 2000
+
+  if (time - begin < beginDuration) {
+    interpolateUniforms((time - begin) / beginDuration, 1, theaninovaStateOut, theaninovaStateDefault, canvas)
   } else {
-    interpolateUniforms(delta - 0.75, 0.25, theaninovaStateSecondEnd, theaninovaStateDefault, canvas)
+    const delta = ((time - (begin + beginDuration)) / duration) % 1
+    if (delta < 0.25) {
+      interpolateUniforms(delta, 0.25, theaninovaStateDefault, theaninovaStateMultiCircles, canvas)
+    } else if (delta < 0.75) {
+      interpolateUniforms(delta - 0.25, 0.5, theaninovaStateMultiCircles, theaninovaStateSecondEnd, canvas)
+    } else {
+      interpolateUniforms(delta - 0.75, 0.25, theaninovaStateSecondEnd, theaninovaStateDefault, canvas)
+    }
   }
 }

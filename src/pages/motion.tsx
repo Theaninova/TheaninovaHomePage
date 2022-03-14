@@ -1,8 +1,8 @@
 import {RouteComponentProps} from '@reach/router'
 import styled, {keyframes} from 'styled-components'
 import {Swiper, SwiperSlide} from 'swiper/react/swiper-react'
-import {EffectCoverflow, FreeMode, Mousewheel} from 'swiper'
-import {motionProjects} from '../components/motion-project/projects'
+import {EffectCoverflow, FreeMode, Lazy, Mousewheel} from 'swiper'
+import {motionProjects} from 'components/motion-project/projects'
 import React from 'react'
 import MotionProjectListItem from '../components/motion-project/MotionProject'
 import {
@@ -10,10 +10,13 @@ import {
   motionPageTitleFontVariation,
   motionPageTitleHoverFontVariation,
 } from '../textStyles'
+
 import 'swiper/swiper.min.css'
 import 'swiper/modules/effect-coverflow/effect-coverflow.min.css'
 import 'swiper/modules/mousewheel/mousewheel.min.css'
 import 'swiper/modules/free-mode/free-mode.min.css'
+import 'swiper/modules/lazy/lazy.min.css'
+
 import useMediaQuery from '../responsive'
 
 const motionPageKeyframes = keyframes`
@@ -27,7 +30,7 @@ const motionPageKeyframes = keyframes`
   }
 `
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -39,16 +42,18 @@ const Title = styled.h1`
   font-variation-settings: ${motionPageTitleFontVariation};
   transition: font-variation-settings 0.5s ease;
   font-size: min(9vw, 120px);
-  animation: ${motionPageKeyframes} 0.8s ease;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${motionPageKeyframes} 0.8s ease;
 
-  @media (hover: hover) {
-    :hover {
-      font-variation-settings: ${motionPageTitleHoverFontVariation};
+    @media (hover: hover) {
+      :hover {
+        font-variation-settings: ${motionPageTitleHoverFontVariation};
+      }
     }
-  }
-  @media (hover: none) {
-    :active {
-      font-variation-settings: ${motionPageTitleHoverFontVariation};
+    @media (hover: none) {
+      :active {
+        font-variation-settings: ${motionPageTitleHoverFontVariation};
+      }
     }
   }
 `
@@ -75,9 +80,12 @@ export default function Motion({}: RouteComponentProps) {
     <Container>
       <Title>Motion Design</Title>
       <StyledSwiper
-        modules={[EffectCoverflow, FreeMode, Mousewheel]}
+        modules={[EffectCoverflow, Mousewheel, FreeMode, Lazy]}
         direction={'vertical'}
         slidesPerView={4}
+        freeMode={{
+          sticky: true,
+        }}
         breakpoints={{
           768: {
             direction: 'horizontal',
@@ -98,9 +106,6 @@ export default function Motion({}: RouteComponentProps) {
         }}
         effect={'coverflow'}
         centeredSlides={true}
-        freeMode={{
-          sticky: true,
-        }}
         coverflowEffect={{
           rotate: 0,
           stretch: 0,
@@ -113,7 +118,14 @@ export default function Motion({}: RouteComponentProps) {
       >
         {motionProjects.map((content, index) => (
           <SwiperSlide key={content.title} virtualIndex={index}>
-            <MotionProjectListItem project={content} mode={centerAlign ? 'center' : 'left'} />
+            {({isActive, isNext, isPrev}) => (
+              <MotionProjectListItem
+                isActive={isActive}
+                isNextOrPrev={isNext || isPrev}
+                project={content}
+                mode={centerAlign ? 'center' : 'left'}
+              />
+            )}
           </SwiperSlide>
         ))}
       </StyledSwiper>

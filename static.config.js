@@ -7,6 +7,7 @@ export default {
   getRoutes: async ({dev}) => [],
   plugins: [
     'react-static-plugin-typescript',
+    'react-static-plugin-styled-components',
     require.resolve('react-static-plugin-sass'),
     [
       require.resolve('react-static-plugin-source-filesystem'),

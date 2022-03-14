@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {Link} from '@reach/router'
 import {navLinkFontVariation, navLinkHoverFontVariation} from './textStyles'
 
-export const NavContainer = styled.div`
+export const NavContainer = styled.nav`
   background-color: var(--greenish-black);
   padding: 8px;
   transition: width, border-radius 0.3s ease;

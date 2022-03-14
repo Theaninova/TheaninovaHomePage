@@ -3,7 +3,7 @@ import {MotionProject} from './motion-project'
 const proj: MotionProject[] = [
   {
     title: 'Theaninova',
-    image: 'thumbs/theaninova_x256.webm',
+    image: 'theaninova_x256.webm',
     sourceFile: 'https://drive.google.com/file/d/1DFt17j8SmHM5Drz8QRVnxSgu4vTNhLCd/view',
     author: 'Theaninova',
     created: '2021-11-02',
@@ -12,7 +12,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Blockshot V2',
-    image: 'thumbs/blockshot_v2_x256.webm',
+    image: 'blockshot_v2_x256.webm',
     author: 'Theaninova',
     created: '2020-12-12',
     sourceFileStatus: 'public',
@@ -21,7 +21,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Blockshot V1',
-    image: 'thumbs/blockshot_v1_x256.webm',
+    image: 'blockshot_v1_x256.webm',
     author: 'Theaninova',
     created: '2019-09-16',
     sourceFileStatus: 'public',
@@ -30,7 +30,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'SN1054',
-    image: 'logos/sn1054.gif',
+    image: 'sn1054.gif',
     author: 'Theaninova',
     created: '2021-06-02',
     sourceFileStatus: 'public',
@@ -39,7 +39,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Hytech',
-    image: 'thumbs/hytech_x256.webm',
+    image: 'hytech_x256.webm',
     author: 'Theaninova',
     created: '2020-02-06',
     sourceFileStatus: 'public',
@@ -47,7 +47,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'AKA-ART',
-    image: 'thumbs/aka_art_x256.webm',
+    image: 'aka_art_x256.webm',
     author: 'Theaninova',
     created: '2021-09-07',
     sourceFileStatus: 'public',
@@ -56,7 +56,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Clixoom',
-    image: 'thumbs/clixoom_x256.webm',
+    image: 'clixoom_x256.webm',
     author: 'Theaninova',
     created: '2020-09-06',
     sourceFileStatus: 'public',
@@ -65,7 +65,7 @@ const proj: MotionProject[] = [
   },
   {
     title: '5MANS',
-    image: 'thumbs/5mans_x256.webm',
+    image: '5mans_x256.webm',
     author: 'Theaninova',
     created: '2020-10-08',
     sourceFileStatus: 'public',
@@ -74,7 +74,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Aiming.pro V1',
-    image: 'logos/aimingpro_v1.gif',
+    image: 'aimingpro_v1.gif',
     author: 'Theaninova',
     created: '2020-12-01',
     sourceFileStatus: 'damaged',
@@ -83,7 +83,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Gamecation',
-    image: 'thumbs/gamecation_x256.webm',
+    image: 'gamecation_x256.webm',
     author: 'Theaninova',
     created: '2022-03-01',
     sourceFileStatus: 'public',
@@ -92,7 +92,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Amir and Malene',
-    image: 'thumbs/amir_and_malene_x256.webm',
+    image: 'amir_and_malene_x256.webm',
     author: 'Theaninova',
     created: '2021-12-19',
     sourceFileStatus: 'public',
@@ -101,7 +101,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Asakesto V2',
-    image: 'thumbs/asakesto_v2_x256.webm',
+    image: 'asakesto_v2_x256.webm',
     author: 'Theaninova',
     created: '2020-09-04',
     sourceFileStatus: 'public',
@@ -110,7 +110,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Asakesto V1',
-    image: 'thumbs/asakesto_v1_x256.webm',
+    image: 'asakesto_v1_x256.webm',
     author: 'Theaninova',
     created: '2020-08-11',
     sourceFileStatus: 'public',
@@ -119,7 +119,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Nephthys Union',
-    image: 'thumbs/nephthys_union_x256.webm',
+    image: 'nephthys_union_x256.webm',
     author: 'Theaninova',
     created: '2021-02-07',
     sourceFileStatus: 'public',
@@ -127,7 +127,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Aiming.pro V3',
-    image: 'thumbs/aiming_pro_v3_x256.webm',
+    image: 'aiming_pro_v3_x256.webm',
     author: 'Theaninova',
     created: '2021-06-30',
     sourceFileStatus: 'public',
@@ -136,7 +136,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Kiarotu V2',
-    image: 'thumbs/kiarotu_v2_x256.webm',
+    image: 'kiarotu_v2_x256.webm',
     author: 'Theaninova',
     created: '2021-02-06',
     sourceFileStatus: 'public',
@@ -144,7 +144,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'Lunar',
-    image: 'logos/lunar.gif',
+    image: 'lunar.gif',
     author: 'Theaninova',
     created: '2021-11-03',
     sourceFileStatus: 'public',
@@ -152,7 +152,7 @@ const proj: MotionProject[] = [
   },
   {
     title: 'R3DOUT V2',
-    image: 'thumbs/r3dout_v2_x256.webm',
+    image: 'r3dout_v2_x256.webm',
     author: 'Theaninova',
     created: '2021-02-06',
     sourceFileStatus: 'public',

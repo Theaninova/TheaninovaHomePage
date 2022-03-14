@@ -1,9 +1,10 @@
 import React from 'react'
 import {Routes, addPrefetchExcludes} from 'react-static'
-import {Router} from '@reach/router'
 import './styles.scss'
 import styled from 'styled-components'
 import {NavContainer, NavLink} from './Nav'
+import {Transition, animated} from 'react-spring'
+import {Router} from '@reach/router'
 
 // Any routes that start with 'dynamic' will be treated as non-static routes
 addPrefetchExcludes(['dynamic'])
@@ -35,7 +36,36 @@ export default function App() {
 
       <React.Suspense fallback={<div>Loading...</div>}>
         <RouterContainer>
-          <Routes default />
+          <Routes
+            default
+            render={({routePath, getComponentForPath}) => {
+              return (
+                <Transition
+                  native
+                  items={routePath}
+                  from={{opacity: 0}}
+                  enter={{opacity: 1}}
+                  leave={{opacity: 0}}
+                >
+                  {/* eslint-disable-next-line react/display-name */}
+                  {(style, item) => {
+                    return (
+                      <animated.div
+                        style={{
+                          ...style,
+                          position: 'absolute',
+                          width: '100%',
+                          height: '100%',
+                        }}
+                      >
+                        {getComponentForPath(item)}
+                      </animated.div>
+                    )
+                  }}
+                </Transition>
+              )
+            }}
+          />
         </RouterContainer>
       </React.Suspense>
     </Container>

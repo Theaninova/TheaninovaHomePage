@@ -18,54 +18,65 @@ export interface MotionProject {
 
 export interface StatusBulb {
   label: string
+  abbr: string
   color: string
 }
 
 export const toolBulbs: Record<Tool, StatusBulb> = {
   'sdf': {
-    label: 'SDF',
+    abbr: 'SDF',
+    label: 'Signed Distance Function',
     color: '#efefef',
   },
   '3d': {
     label: '3D',
+    abbr: '3D',
     color: '#efefef',
   },
   '2d': {
     label: '2D',
+    abbr: '2D',
     color: '#efefef',
   },
 }
 
 export const officialBulbs: Record<OfficialStatus, StatusBulb> = {
   'commissioned': {
-    label: 'Com',
+    label: 'Commissioned',
+    abbr: 'Com',
     color: '#aeffa1',
   },
   'official': {
-    label: 'OFF',
+    abbr: 'OFF',
+    label: 'Official',
     color: '#aeffa1',
   },
   'fan art': {
-    label: 'Fan',
+    abbr: 'Fan',
+    label: 'Fan Art',
     color: '#efefef',
   },
 }
 
 export const sourceFileStatusBulbs: Record<SourceFileStatus, StatusBulb> = {
   private: {
-    label: 'prv',
+    abbr: 'prv',
+    label: 'Private',
     color: '#efefef',
   },
   public: {
-    label: 'pub',
+    abbr: 'pub',
+    label: 'Public',
     color: '#aeffa1',
   },
   damaged: {
-    label: 'dam',
+    abbr: 'dam',
+    label: 'Damaged',
     color: '#ffe5a1',
   },
   lost: {
-    label: 'ded',
+    abbr: 'ded',
+    label: 'Lost',
     color: '#ffa1a1',
   },
 }
