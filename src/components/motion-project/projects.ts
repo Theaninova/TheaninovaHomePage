@@ -28,7 +28,7 @@ const proj: MotionProject[] = [
     tool: ['2d'],
     official: 'fan art',
   },
-  {
+  /*{
     title: 'SN1054',
     image: 'sn1054.gif',
     author: 'Theaninova',
@@ -36,7 +36,7 @@ const proj: MotionProject[] = [
     sourceFileStatus: 'public',
     tool: ['sdf'],
     official: 'commissioned',
-  },
+  },*/
   {
     title: 'Hytech',
     image: 'hytech_x256.webm',
@@ -72,7 +72,7 @@ const proj: MotionProject[] = [
     tool: ['sdf'],
     official: 'official',
   },
-  {
+  /*{
     title: 'Aiming.pro V1',
     image: 'aimingpro_v1.gif',
     author: 'Theaninova',
@@ -80,7 +80,7 @@ const proj: MotionProject[] = [
     sourceFileStatus: 'damaged',
     tool: ['sdf'],
     official: 'official',
-  },
+  },*/
   {
     title: 'Gamecation',
     image: 'gamecation_x256.webm',
@@ -142,14 +142,14 @@ const proj: MotionProject[] = [
     sourceFileStatus: 'public',
     tool: ['sdf'],
   },
-  {
+  /*{
     title: 'Lunar',
     image: 'lunar.gif',
     author: 'Theaninova',
     created: '2021-11-03',
     sourceFileStatus: 'public',
     tool: ['sdf'],
-  },
+  },*/
   {
     title: 'R3DOUT V2',
     image: 'r3dout_v2_x256.webm',

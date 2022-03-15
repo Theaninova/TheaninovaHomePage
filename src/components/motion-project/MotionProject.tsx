@@ -1,22 +1,15 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import {MotionProject, officialBulbs, sourceFileStatusBulbs, toolBulbs} from './motion-project'
 import styled, {css} from 'styled-components'
-import {
-  motionProjectBulbFontVariation,
-  motionProjectSubtitleFontVariation,
-  motionProjectTitleFontVariation,
-} from '../../textStyles'
+import {useSwiperSlide} from 'swiper/react/swiper-react'
 import useMediaQuery from '../../responsive'
-
-interface Props {
-  project: MotionProject
-  mode: 'center' | 'left'
-  isActive: boolean
-  isNextOrPrev: boolean
-}
+import {animated, useSpring} from 'react-spring'
+import VideoComponent from 'components/motion-project/VideoComponent'
+import TextComponent from 'components/motion-project/TextComponent'
 
 const containerLeft = css`
-  width: fit-content;
+  width: 100%;
+  height: 256px;
 
   // overlap
   display: grid;
@@ -25,7 +18,9 @@ const containerLeft = css`
   justify-items: start;
 `
 
-const overlap = css`
+const containerCenter = css`
+  width: 500px;
+  height: 256px;
   display: grid;
   align-items: center;
   align-content: center;
@@ -33,179 +28,61 @@ const overlap = css`
   justify-content: center;
 `
 
-const containerCenter = css`
-  width: min(500px, 100%);
-  ${overlap}
-`
-
 const Container = styled.section<{mode: 'center' | 'left'}>`
   ${props => (props.mode === 'left' ? containerLeft : containerCenter)};
 `
 
-const TextContainer = styled.div`
+const TextContainer = styled(animated.div)`
+  grid-column: 1;
+  grid-row: 1;
   z-index: 4;
-  grid-column: 1;
-  grid-row: 1;
-  width: max-content;
-  padding: 8px 20px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 1);
 `
 
-const mediaStyle = css`
-  border-radius: 100%;
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-  object-fit: cover;
+interface Props {
+  project: MotionProject
+  mode: 'center' | 'left'
+}
 
-  grid-column: 1;
-  grid-row: 1;
+export default function MotionProjectListItem({mode, project}: Props) {
+  const bulbs = useMemo(
+    () => [
+      ...(project.sourceFileStatus ? [sourceFileStatusBulbs[project.sourceFileStatus]] : []),
+      ...(project.official ? [officialBulbs[project.official]] : []),
+      ...(project.tool ? project.tool.map(it => toolBulbs[it]) : []),
+    ],
+    [project],
+  )
 
-  @media (min-width: 768px) {
-    width: 256px;
-    height: 256px;
-  }
-`
-
-const StyledVideo = styled.video`
-  transition: filter 0.5s;
-  ${mediaStyle};
-`
-
-const StyledImg = styled.img`
-  ${mediaStyle}
-`
-
-const Title = styled.h2`
-  font-size: 40px;
-  font-variation-settings: ${motionProjectTitleFontVariation};
-  margin: 0;
-  padding-bottom: 0;
-
-  @media (min-width: 768px) {
-    font-size: 60px;
-  }
-`
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 2px;
-`
-
-const BulbList = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 2px;
-
-  .bulb:first-child {
-    border-radius: 12.5px 0 0 12.5px;
-    padding-left: 6px;
-  }
-
-  .bulb:last-child {
-    border-radius: 0 12.5px 12.5px 0;
-    padding-right: 6px;
-  }
-`
-
-const subtitleAdditionalStyles = css`
-  display: flex;
-  text-shadow: none;
-  height: 20px;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-`
-
-const CreationDate = styled.time`
-  ${subtitleAdditionalStyles};
-  font-variation-settings: ${motionProjectSubtitleFontVariation};
-  padding: 0 8px 2px;
-  margin: 0;
-  border-radius: 12.5px;
-  background-color: rgba(black, 0.5);
-`
-
-const Bulb = styled.li`
-  ${subtitleAdditionalStyles};
-  font-variation-settings: ${motionProjectBulbFontVariation};
-  padding: 0 3px 2px;
-  color: #171c14;
-`
-
-export default function MotionProjectListItem(props: Props) {
-  const bulbs = [
-    ...(props.project.sourceFileStatus ? [sourceFileStatusBulbs[props.project.sourceFileStatus]] : []),
-    ...(props.project.official ? [officialBulbs[props.project.official]] : []),
-    ...(props.project.tool ? props.project.tool.map(it => toolBulbs[it]) : []),
-  ]
+  const slide = useSwiperSlide()
 
   // TODO: const previewSource = `/assets/motion/thumbs/x32/${props.project.image}`
-  const fullVideoSource = `/assets/motion/thumbs/${props.project.image}`
-  const staticImage = `assets/motion/thumbs/thumbs/${props.project.image}.jpg`
-  const source = fullVideoSource
-
-  const videoRef = useRef<HTMLVideoElement>()
   const allowVideo = useMediaQuery('(prefers-reduced-motion: no-preference)')
+  const [playVideo, setPlayVideo] = useState(false)
+  const [styles] = useSpring(
+    {
+      to: playVideo ? [{display: 'block'}, {opacity: 1}] : [{opacity: 0}, {display: 'none'}],
+      config: {duration: 150},
+    },
+    [playVideo],
+  )
   useEffect(() => {
-    if (allowVideo && (props.isActive || props.isNextOrPrev)) {
-      void videoRef?.current?.play()
-    } else {
-      videoRef?.current?.pause()
-    }
-  }, [allowVideo, props.isActive, props.isNextOrPrev])
+    setPlayVideo(slide.isActive || (mode === 'center' && (slide.isNext || slide.isPrev)))
+  }, [slide.isNext, slide.isActive, slide.isPrev, mode])
+
+  const staticImage = useMemo(() => `/assets/motion/thumbs/thumbs/${project.image}.jpg`, [project])
+  const fullVideoSource = useMemo(() => `/assets/motion/thumbs/${project.image}`, [project])
 
   return (
-    <Container mode={props.mode}>
-      <TextContainer>
-        <Title>{props.project.title}</Title>
-        <Row>
-          <CreationDate dateTime={props.project.created}>
-            {new Date(props.project.created).toLocaleDateString()}
-          </CreationDate>
-          <BulbList>
-            {bulbs.map(bulb => (
-              <Bulb
-                title={bulb.label}
-                style={{backgroundColor: `${bulb.color}77`}}
-                className={'bulb'}
-                key={bulb.label}
-              >
-                <abbr style={{textDecoration: 'none'}}>{bulb.abbr.toUpperCase()}</abbr>
-              </Bulb>
-            ))}
-          </BulbList>
-        </Row>
+    <Container mode={mode}>
+      <TextContainer style={styles}>
+        <TextComponent project={project} bulbs={bulbs} />
       </TextContainer>
-      {/* TODO: replace everything with proper videos */}
-      {props.project.image.endsWith('.webm') ? (
-        <StyledVideo
-          src={source}
-          ref={videoRef}
-          poster={staticImage}
-          preload={'none'}
-          loop
-          playsInline
-          muted
-          className={'swiper-lazy'}
-          style={{filter: props.isActive || props.isNextOrPrev ? 'blur(0)' : 'blur(10px)'}}
-        />
-      ) : (
-        <StyledImg
-          src={`assets/motion/logos/${props.project.image}`}
-          className={'swiper-lazy'}
-          alt={props.project.title}
-          style={{filter: props.isActive || props.isNextOrPrev ? 'blur(0)' : 'blur(10px)'}}
-        />
-      )}
+      <VideoComponent
+        allowVideo={allowVideo}
+        playVideo={playVideo}
+        fullVideoSource={fullVideoSource}
+        staticImage={staticImage}
+      />
     </Container>
   )
 }

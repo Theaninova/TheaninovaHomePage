@@ -7,14 +7,8 @@ import {
   homePageTitleHoverFontVariation,
 } from '../textStyles'
 import {isMobile} from 'react-device-detect'
-import {ShaderCanvas} from '../shaders/shaderCanvas'
-import {loadCompileShaders} from '../shaders/compileShader'
-import {
-  theaninovaColors,
-  theaninovaInterpolateState,
-  theaninovaStateOut,
-} from '../shaders/theaninovaShaderStates'
-import {expoOut} from '../shaders/timeline'
+import type {ShaderCanvas} from '../shaders/shaderCanvas'
+import {Helmet} from 'react-helmet'
 
 const Container = styled.main`
   display: grid;
@@ -118,26 +112,34 @@ export default class Index extends React.Component<
   async componentDidMount() {
     if (isMobile) return
 
+    // we don't want to load the shaders on mobile
+    const [canvas, theaninova, shaders, timeline] = await Promise.all([
+      import('../shaders/shaderCanvas'),
+      import('../shaders/theaninovaShaderStates'),
+      import('../shaders/compileShader'),
+      import('../shaders/timeline'),
+    ])
+
     window.addEventListener('resize', () => {
       this.state.shaderCanvas?.resize()
     })
 
     this.setState({
-      shaderCanvas: new ShaderCanvas(this.state.canvasRef.current, {
+      shaderCanvas: new canvas.ShaderCanvas(this.state.canvasRef.current, {
         uniforms: {
-          ...theaninovaStateOut,
-          ...theaninovaColors,
+          ...theaninova.theaninovaStateOut,
+          ...theaninova.theaninovaColors,
         },
-        frag: await loadCompileShaders('logos/theaninova_simple', ['sdf']),
+        frag: await shaders.loadCompileShaders('logos/theaninova_simple', ['sdf']),
       }),
     })
     const begin = performance.now()
 
     const animate = () => {
       requestAnimationFrame(animate)
-      theaninovaInterpolateState(performance.now(), begin, this.state.shaderCanvas)
+      theaninova.theaninovaInterpolateState(performance.now(), begin, this.state.shaderCanvas)
 
-      const stamp = expoOut(
+      const stamp = timeline.expoOut(
         performance.now() - this.state.hoverTimestamp,
         500,
         this.state.textHovering ? 1 : 0.5,
@@ -166,6 +168,10 @@ export default class Index extends React.Component<
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Theaninova</title>
+          <meta name="description" content="The home page of Thea Schöbl" />
+        </Helmet>
         <TitleContainer onMouseOver={() => this.hover(true)} onMouseOut={() => this.hover(false)}>
           <Title>Theaninova</Title>
         </TitleContainer>
