@@ -1,5 +1,4 @@
 /* eslint-disable unicorn/prefer-module,unicorn/prefer-node-protocol,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/restrict-template-expressions */
-import axios from 'axios'
 import path from 'path'
 
 export default {

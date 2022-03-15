@@ -1,4 +1,4 @@
-import {MotionProject} from './motion-project'
+import {MotionProject} from './motionProject'
 
 const proj: MotionProject[] = [
   {

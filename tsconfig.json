@@ -1,8 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2020",
-    "module": "es2020",
+    "target": "esnext",
+    "module": "esnext",
     "jsx": "preserve",
     "allowJs": false,
     "moduleResolution": "node",
@@ -21,7 +21,7 @@
       "containers/*": ["src/containers/*"],
       "types/*": ["types/*"]
     },
-    "lib": ["dom", "es2020"]
+    "lib": ["dom", "es2020"],
   },
   "exclude": ["artifacts/**/*", "dist/**/*", "public/**/*", "node_modules"]
 }

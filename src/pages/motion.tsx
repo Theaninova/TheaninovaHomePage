@@ -1,7 +1,7 @@
 import {RouteComponentProps} from '@reach/router'
 import styled, {keyframes} from 'styled-components'
 import React, {Component} from 'react'
-import type MotionProjectListItem from '../components/motion-project/MotionProject'
+import type MotionProjectListItem from '../components/motion-project/MotionProjectComponent'
 import {
   motionPageTitleFadeInFontVariation,
   motionPageTitleFontVariation,
@@ -20,7 +20,7 @@ import {animated, Transition} from 'react-spring'
 import type MotionSwiper from 'components/swiper-lazy/MotionSwiper'
 import type SwiperSlide from 'components/swiper-lazy/SwiperSlide'
 import type {SwiperModule} from 'swiper/types/shared'
-import type {MotionProject} from 'components/motion-project/motion-project'
+import type {MotionProject} from 'components/motion-project/motionProject'
 
 const motionPageKeyframes = keyframes`
   0% {
@@ -97,13 +97,15 @@ export default class Motion extends Component<RouteComponentProps, State> {
 
     this.SwiperComponent = import('components/swiper-lazy/MotionSwiper').then(it => it.default)
     this.SwiperSlideComponent = import('components/swiper-lazy/SwiperSlide').then(it => it.default)
-    this.MotionProjectComponent = import('components/motion-project/MotionProject').then(it => it.default)
+    this.MotionProjectComponent = import('components/motion-project/MotionProjectComponent').then(
+      it => it.default,
+    )
 
     this.projects = import('components/motion-project/projects').then(it => it.motionProjects)
     this.modules = Promise.all([
-      ...(isMobile ? [] : [import('swiper/modules/mousewheel/mousewheel.js')]),
-      import('swiper/modules/effect-coverflow/effect-coverflow.js'),
-      import('swiper/modules/virtual/virtual.js'),
+      ...(isMobile ? [] : [import('components/swiper-lazy/Mousewheel')]),
+      import('components/swiper-lazy/EffectCoverflow'),
+      import('components/swiper-lazy/Virtual'),
     ]).then(it => it.map(module => module.default))
   }
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react'
-import {MotionProject, officialBulbs, sourceFileStatusBulbs, toolBulbs} from './motion-project'
+import {MotionProject, officialBulbs, sourceFileStatusBulbs, toolBulbs} from './motionProject'
 import styled, {css} from 'styled-components'
 import {useSwiperSlide} from 'swiper/react/swiper-react'
 import useMediaQuery from '../../responsive'

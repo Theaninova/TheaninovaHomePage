@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {MotionProject, StatusBulb} from 'components/motion-project/motion-project'
+import {MotionProject, StatusBulb} from 'components/motion-project/motionProject'
 import styled, {css} from 'styled-components'
 import {
   motionProjectBulbFontVariation,
