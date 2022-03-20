@@ -11,8 +11,12 @@ import 'swiper/scss/lazy'
 import '../styles.scss'
 import '../page-transitions.scss'
 import styles from './_app.module.scss'
+import {useRouter} from 'next/router'
 
 export default function TheaninovaApp({Component, pageProps}: AppProps) {
+  const router = useRouter()
+
+  // noinspection HtmlUnknownTarget
   return (
     <>
       <nav className={styles.navContainer}>
@@ -41,7 +45,7 @@ export default function TheaninovaApp({Component, pageProps}: AppProps) {
         loadingDelay={300}
         loadingTimeout={300}
       >
-        <Component {...pageProps} />
+        <Component {...pageProps} key={router.route} />
       </PageTransition>
     </>
   )

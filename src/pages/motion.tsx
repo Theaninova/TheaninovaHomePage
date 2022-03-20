@@ -6,6 +6,7 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 import styles from './motion.module.scss'
 import {EffectCoverflow, Mousewheel, Virtual} from 'swiper'
 import {MotionProject} from 'components/motion-project/motionProject'
+import Head from 'next/head'
 
 interface State {
   projects: MotionProject[]
@@ -44,74 +45,79 @@ export default class Motion extends Component<RouteComponentProps, State> {
   }
 
   render() {
-    // const centerAlign = useMediaQuery('(min-width: 768px)')
-
     return (
-      <main className={styles.container}>
-        {/*<Helmet>
-          <title>Theaninova</title>
+      <>
+        <Head>
+          <title>Theaninova - Motion Graphics</title>
           <meta name="description" content="Motion Graphics by Thea Schöbl" />
-        </Helmet>*/}
-        <h1 className={styles.title}>Motion Design</h1>
-        <Transition items={this.state?.loaded} from={{opacity: 0}} enter={{opacity: 1}} leave={{opacity: 0}}>
-          {(animatedStyle, item) =>
-            item && (
-              <animated.div style={animatedStyle} className={styles.animatedDivContainer}>
-                <Swiper
-                  className={styles.swiperStyles}
-                  modules={[Mousewheel, EffectCoverflow, Virtual]}
-                  direction={'vertical'}
-                  slidesPerView={2}
-                  breakpoints={{
-                    768: {
-                      direction: 'horizontal',
-                      slidesPerView: 1.5,
-                    },
-                    1024: {
-                      direction: 'horizontal',
-                      slidesPerView: 2,
-                    },
-                    1440: {
-                      direction: 'horizontal',
-                      slidesPerView: 3,
-                    },
-                    1920: {
-                      direction: 'horizontal',
-                      slidesPerView: 4,
-                    },
-                  }}
-                  effect={'coverflow'}
-                  centeredSlides={true}
-                  coverflowEffect={{
-                    rotate: 0,
-                    stretch: 0,
-                    depth: 200,
-                    modifier: 1,
-                    slideShadows: false,
-                  }}
-                  mousewheel
-                  virtual={{
-                    enabled: true,
-                    cache: true,
-                    addSlidesAfter: 1,
-                    addSlidesBefore: 1,
-                  }}
-                  spaceBetween={24}
-                >
-                  {this.state.projects.map((content, index) => (
-                    <SwiperSlide key={content.title} virtualIndex={index}>
-                      <MotionProjectListItem
-                        project={content}
-                        mode={this.state.centered ? 'center' : 'left'}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </animated.div>
-            )
-          }
-        </Transition>
-      </main>
+        </Head>
+        <main className={styles.container}>
+          <h1 className={styles.title}>Motion Design</h1>
+          <Transition
+            items={this.state?.loaded}
+            from={{opacity: 0}}
+            enter={{opacity: 1}}
+            leave={{opacity: 0}}
+          >
+            {(animatedStyle, item) =>
+              item && (
+                <animated.div style={animatedStyle} className={styles.animatedDivContainer}>
+                  <Swiper
+                    className={styles.swiperStyles}
+                    modules={[Mousewheel, EffectCoverflow, Virtual]}
+                    direction={'vertical'}
+                    slidesPerView={2}
+                    breakpoints={{
+                      768: {
+                        direction: 'horizontal',
+                        slidesPerView: 1.5,
+                      },
+                      1024: {
+                        direction: 'horizontal',
+                        slidesPerView: 2,
+                      },
+                      1440: {
+                        direction: 'horizontal',
+                        slidesPerView: 3,
+                      },
+                      1920: {
+                        direction: 'horizontal',
+                        slidesPerView: 4,
+                      },
+                    }}
+                    effect={'coverflow'}
+                    centeredSlides={true}
+                    coverflowEffect={{
+                      rotate: 0,
+                      stretch: 0,
+                      depth: 200,
+                      modifier: 1,
+                      slideShadows: false,
+                    }}
+                    mousewheel
+                    virtual={{
+                      enabled: true,
+                      cache: true,
+                      addSlidesAfter: 1,
+                      addSlidesBefore: 1,
+                    }}
+                    spaceBetween={24}
+                  >
+                    {this.state.projects.map((content, index) => (
+                      <SwiperSlide key={content.title} virtualIndex={index}>
+                        <MotionProjectListItem
+                          project={content}
+                          mode={this.state.centered ? 'center' : 'left'}
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </animated.div>
+              )
+            }
+          </Transition>
+        </main>
+      </>
     )
   }
 }

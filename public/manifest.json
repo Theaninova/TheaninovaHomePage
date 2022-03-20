@@ -1,0 +1,27 @@
+{
+  "short_name": "Theaninova",
+  "name": "Theaninova Home Page",
+  "icons": [
+    {
+      "src": "/assets/icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#171c15",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#2a3327",
+  "shortcuts": [
+    {
+      "name": "Motion Graphics",
+      "short_name": "Motion",
+      "description": "Motion Graphics by Theaninova",
+      "url": "/motion",
+      "icons": [{ "src": "/assets/icon.png", "sizes": "512x512" }]
+    }
+  ],
+  "description": "Thea Schöbl's personal website"
+}

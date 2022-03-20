@@ -3,10 +3,11 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "start": "next start",
-    "start:external": "react-static start --external",
-    "dev": "next dev",
-    "build": "next build && next export"
+    "serve": "next start",
+    "start": "next dev",
+    "start:external": "next dev --hostname 0.0.0.0",
+    "build": "next build && next export",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "next": "^12.1.0",
@@ -30,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "compression-webpack-plugin": "^9.2.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",

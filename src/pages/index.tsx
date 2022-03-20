@@ -3,6 +3,7 @@ import {RouteComponentProps} from '@reach/router'
 import {isMobile} from 'react-device-detect'
 import type {ShaderCanvas} from '../shaders/shaderCanvas'
 import styles from './index.module.scss'
+import Head from 'next/head'
 
 export default class Index extends React.Component<
   RouteComponentProps,
@@ -90,27 +91,33 @@ export default class Index extends React.Component<
 
   render() {
     return (
-      <main className={styles.container}>
-        <div
-          className={styles.titleContainer}
-          onMouseOver={() => this.hover(true)}
-          onMouseOut={() => this.hover(false)}
-        >
-          <h1 className={styles.title}>Theaninova</h1>
-        </div>
-        {isMobile ? (
-          <video
-            className={`${styles.background} ${styles.mobileVideo}`}
-            autoPlay
-            loop
-            muted
-            playsInline
-            src={'assets/background-fallback.webm'}
-          />
-        ) : (
-          <canvas className={styles.background} ref={this.state.canvasRef} />
-        )}
-      </main>
+      <>
+        <Head>
+          <title>Theaninova</title>
+          <meta name="description" content="Thea Schöbl's Home Page" />
+        </Head>
+        <main className={styles.container}>
+          <div
+            className={styles.titleContainer}
+            onMouseOver={() => this.hover(true)}
+            onMouseOut={() => this.hover(false)}
+          >
+            <h1 className={styles.title}>Theaninova</h1>
+          </div>
+          {isMobile ? (
+            <video
+              className={`${styles.background} ${styles.mobileVideo}`}
+              autoPlay
+              loop
+              muted
+              playsInline
+              src={'assets/background-fallback.webm'}
+            />
+          ) : (
+            <canvas className={styles.background} ref={this.state.canvasRef} />
+          )}
+        </main>
+      </>
     )
   }
 }
