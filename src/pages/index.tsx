@@ -1,85 +1,8 @@
 import React from 'react'
-import styled, {css, keyframes} from 'styled-components'
 import {RouteComponentProps} from '@reach/router'
-import {
-  homePageTitleFadeInFontVariation,
-  homePageTitleFontVariation,
-  homePageTitleHoverFontVariation,
-} from '../textStyles'
 import {isMobile} from 'react-device-detect'
 import type {ShaderCanvas} from '../shaders/shaderCanvas'
-import {Helmet} from 'react-helmet'
-
-const Container = styled.main`
-  display: grid;
-  height: 100%;
-  width: 100%;
-`
-
-const TitleContainer = styled.div`
-  grid-column: 1;
-  grid-row: 1;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const titleAnimation = keyframes`
-  0% {
-    font-variation-settings: ${homePageTitleFadeInFontVariation};
-  }
-  100% {
-    font-variation-settings: ${homePageTitleFontVariation};
-  }
-`
-
-const Title = styled.h1`
-  padding: 16px;
-  z-index: 1;
-  margin: 0;
-  font-size: min(14vw, 200px);
-  text-align: center;
-  font-variation-settings: ${homePageTitleFontVariation};
-  transition: font-variation-settings 0.25s ease;
-
-  user-select: none;
-
-  animation: ${titleAnimation} 1.5s ease;
-  text-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-
-  @media (hover: hover) {
-    :hover {
-      font-variation-settings: ${homePageTitleHoverFontVariation};
-    }
-  }
-  @media (hover: none) {
-    .title:active {
-      font-variation-settings: ${homePageTitleHoverFontVariation};
-    }
-    transition: font-variation-settings 0.1s ease;
-  }
-`
-
-const backgroundCss = css`
-  grid-column: 1;
-  grid-row: 1;
-  width: 100%;
-  height: 100%;
-`
-
-const MobileVideo = styled.video`
-  ${backgroundCss};
-  overflow: hidden;
-  object-fit: contain;
-  background-color: var(--dark-green);
-`
-
-const DesktopCanvas = styled.canvas`
-  ${backgroundCss};
-`
+import styles from './index.module.scss'
 
 export default class Index extends React.Component<
   RouteComponentProps,
@@ -167,20 +90,27 @@ export default class Index extends React.Component<
 
   render() {
     return (
-      <Container>
-        <Helmet>
-          <title>Theaninova</title>
-          <meta name="description" content="The home page of Thea Schöbl" />
-        </Helmet>
-        <TitleContainer onMouseOver={() => this.hover(true)} onMouseOut={() => this.hover(false)}>
-          <Title>Theaninova</Title>
-        </TitleContainer>
+      <main className={styles.container}>
+        <div
+          className={styles.titleContainer}
+          onMouseOver={() => this.hover(true)}
+          onMouseOut={() => this.hover(false)}
+        >
+          <h1 className={styles.title}>Theaninova</h1>
+        </div>
         {isMobile ? (
-          <MobileVideo autoPlay loop muted playsInline src={'assets/background-fallback.webm'} />
+          <video
+            className={`${styles.background} ${styles.mobileVideo}`}
+            autoPlay
+            loop
+            muted
+            playsInline
+            src={'assets/background-fallback.webm'}
+          />
         ) : (
-          <DesktopCanvas ref={this.state.canvasRef} />
+          <canvas className={styles.background} ref={this.state.canvasRef} />
         )}
-      </Container>
+      </main>
     )
   }
 }

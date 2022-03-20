@@ -2,12 +2,15 @@
 
 # Assets
 /public/assets
-/src/fonts
+/public/fonts
 
+#next
+/.next
 
 # Compiled output
 /dist
 /tmp
+/out
 /out-tsc
 /bazel-out
 /artifacts

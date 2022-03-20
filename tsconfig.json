@@ -17,11 +17,36 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "components/*": ["src/components/*"],
-      "containers/*": ["src/containers/*"],
-      "types/*": ["types/*"]
+      "components/*": [
+        "src/components/*"
+      ],
+      "containers/*": [
+        "src/containers/*"
+      ],
+      "types/*": [
+        "types/*"
+      ]
     },
-    "lib": ["dom", "es2020"],
+    "lib": [
+      "dom",
+      "es2020"
+    ],
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "exclude": ["artifacts/**/*", "dist/**/*", "public/**/*", "node_modules"]
+  "exclude": [
+    "artifacts/**/*",
+    "dist/**/*",
+    "public/**/*",
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

@@ -3,14 +3,13 @@
   "ignorePatterns": [
     "dist/",
     "build/",
+    "out/",
+    "next.config.js",
     "**/*.css",
     "**/*.scss",
     "**/*.svg"
   ],
   "settings": {
-    "jsdoc": {
-      "mode": "typescript"
-    },
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", "tsx"]
     },
@@ -30,22 +29,19 @@
     "project": "tsconfig.json"
   },
   "extends": [
-    "plugin:react/recommended",
+    "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "plugin:jsdoc/recommended",
     "plugin:unicorn/recommended"
   ],
   "plugins": [
     "eslint-plugin-unicorn",
-    "eslint-plugin-jsdoc",
     "prettier",
-    "react",
-    "react-hooks",
     "@typescript-eslint"
   ],
   "rules": {
-    "unicorn/filename-case": ["error", {"cases": {"pascalCase": true, "camelCase": true}}],
+    "@next/next/no-img-element":  "off",
+    "unicorn/filename-case": "off",
     "unicorn/no-array-callback-reference": "off",
     "unicorn/number-literal-case": "off",
     "unicorn/prefer-object-from-entries": "off",
@@ -65,15 +61,6 @@
     "unicorn/no-null": "off",
     "unicorn/no-array-for-each": "off",
     "unicorn/no-array-reduce": "off",
-    "react/no-unescaped-entities": "off",
-    "jsdoc/require-jsdoc": "off",
-    "jsdoc/no-types": "error",
-    "jsdoc/require-param": "off",
-    "jsdoc/require-param-description": "error",
-    "jsdoc/check-param-names": "error",
-    "jsdoc/require-returns": "off",
-    "jsdoc/require-param-type": "off",
-    "jsdoc/require-returns-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",

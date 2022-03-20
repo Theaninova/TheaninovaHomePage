@@ -1,92 +1,20 @@
 import {RouteComponentProps} from '@reach/router'
-import styled, {keyframes} from 'styled-components'
 import React, {Component} from 'react'
-import type MotionProjectListItem from '../components/motion-project/MotionProjectComponent'
-import {
-  motionPageTitleFadeInFontVariation,
-  motionPageTitleFontVariation,
-  motionPageTitleHoverFontVariation,
-} from '../textStyles'
-
-import 'swiper/swiper.min.css'
-import 'swiper/modules/effect-coverflow/effect-coverflow.min.css'
-import 'swiper/modules/mousewheel/mousewheel.min.css'
-import 'swiper/modules/free-mode/free-mode.min.css'
-import 'swiper/modules/lazy/lazy.min.css'
-
-import {Helmet} from 'react-helmet'
-import {isMobile} from 'react-device-detect'
+import MotionProjectListItem from '../components/motion-project/MotionProjectComponent'
 import {animated, Transition} from 'react-spring'
-import type MotionSwiper from 'components/swiper-lazy/MotionSwiper'
-import type SwiperSlide from 'components/swiper-lazy/SwiperSlide'
-import type {SwiperModule} from 'swiper/types/shared'
-import type {MotionProject} from 'components/motion-project/motionProject'
-
-const motionPageKeyframes = keyframes`
-  0% {
-    font-variation-settings: ${motionPageTitleFadeInFontVariation};
-    opacity: 0;
-  }
-  100% {
-    font-variation-settings: ${motionPageTitleFontVariation};
-    opacity: 1;
-  }
-`
-
-const Container = styled.main`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-`
-
-const AnimatedDivContainer = styled(animated.div)`
-  width: 100%;
-  height: 100%;
-`
-
-const Title = styled.h1`
-  margin: 16px;
-  padding: 0;
-  font-variation-settings: ${motionPageTitleFontVariation};
-  transition: font-variation-settings 0.5s ease;
-  font-size: min(9vw, 120px);
-  @media (prefers-reduced-motion: no-preference) {
-    animation: ${motionPageKeyframes} 0.8s ease;
-
-    @media (hover: hover) {
-      :hover {
-        font-variation-settings: ${motionPageTitleHoverFontVariation};
-      }
-    }
-    @media (hover: none) {
-      :active {
-        font-variation-settings: ${motionPageTitleHoverFontVariation};
-      }
-    }
-  }
-`
+import {Swiper, SwiperSlide} from 'swiper/react'
+import styles from './motion.module.scss'
+import {EffectCoverflow, Mousewheel, Virtual} from 'swiper'
+import {MotionProject} from 'components/motion-project/motionProject'
 
 interface State {
-  StyledSwiper: typeof MotionSwiper
-  SwiperSlide: typeof SwiperSlide
-  MotionProject: typeof MotionProjectListItem
-  modules: SwiperModule[]
   projects: MotionProject[]
   centered: boolean
   loaded: boolean
 }
 
 export default class Motion extends Component<RouteComponentProps, State> {
-  SwiperComponent: Promise<typeof MotionSwiper>
-
-  SwiperSlideComponent: Promise<typeof SwiperSlide>
-
-  MotionProjectComponent: Promise<typeof MotionProjectListItem>
-
   projects: Promise<MotionProject[]>
-
-  modules: Promise<SwiperModule[]>
 
   mediaQueryHandler: (event: MediaQueryListEvent) => unknown
 
@@ -95,18 +23,7 @@ export default class Motion extends Component<RouteComponentProps, State> {
   constructor(props: RouteComponentProps) {
     super(props)
 
-    this.SwiperComponent = import('components/swiper-lazy/MotionSwiper').then(it => it.default)
-    this.SwiperSlideComponent = import('components/swiper-lazy/SwiperSlide').then(it => it.default)
-    this.MotionProjectComponent = import('components/motion-project/MotionProjectComponent').then(
-      it => it.default,
-    )
-
     this.projects = import('components/motion-project/projects').then(it => it.motionProjects)
-    this.modules = Promise.all([
-      ...(isMobile ? [] : [import('components/swiper-lazy/Mousewheel')]),
-      import('components/swiper-lazy/EffectCoverflow'),
-      import('components/swiper-lazy/Virtual'),
-    ]).then(it => it.map(module => module.default))
   }
 
   componentWillUnmount() {
@@ -121,11 +38,7 @@ export default class Motion extends Component<RouteComponentProps, State> {
 
     this.setState({
       centered: this.mediaQuery.matches,
-      StyledSwiper: await this.SwiperComponent,
-      SwiperSlide: await this.SwiperSlideComponent,
-      MotionProject: await this.MotionProjectComponent,
       projects: await this.projects,
-      modules: await this.modules,
       loaded: true,
     })
   }
@@ -134,18 +47,19 @@ export default class Motion extends Component<RouteComponentProps, State> {
     // const centerAlign = useMediaQuery('(min-width: 768px)')
 
     return (
-      <Container>
-        <Helmet>
+      <main className={styles.container}>
+        {/*<Helmet>
           <title>Theaninova</title>
           <meta name="description" content="Motion Graphics by Thea Schöbl" />
-        </Helmet>
-        <Title>Motion Design</Title>
+        </Helmet>*/}
+        <h1 className={styles.title}>Motion Design</h1>
         <Transition items={this.state?.loaded} from={{opacity: 0}} enter={{opacity: 1}} leave={{opacity: 0}}>
-          {(styles, item) =>
+          {(animatedStyle, item) =>
             item && (
-              <AnimatedDivContainer style={styles}>
-                <this.state.StyledSwiper
-                  modules={this.state.modules}
+              <animated.div style={animatedStyle} className={styles.animatedDivContainer}>
+                <Swiper
+                  className={styles.swiperStyles}
+                  modules={[Mousewheel, EffectCoverflow, Virtual]}
                   direction={'vertical'}
                   slidesPerView={2}
                   breakpoints={{
@@ -185,19 +99,19 @@ export default class Motion extends Component<RouteComponentProps, State> {
                   spaceBetween={24}
                 >
                   {this.state.projects.map((content, index) => (
-                    <this.state.SwiperSlide key={content.title} virtualIndex={index}>
-                      <this.state.MotionProject
+                    <SwiperSlide key={content.title} virtualIndex={index}>
+                      <MotionProjectListItem
                         project={content}
                         mode={this.state.centered ? 'center' : 'left'}
                       />
-                    </this.state.SwiperSlide>
+                    </SwiperSlide>
                   ))}
-                </this.state.StyledSwiper>
-              </AnimatedDivContainer>
+                </Swiper>
+              </animated.div>
             )
           }
         </Transition>
-      </Container>
+      </main>
     )
   }
 }

@@ -1,26 +1,5 @@
 import React, {Component} from 'react'
-import styled, {css} from 'styled-components'
-
-const mediaStyle = css`
-  border-radius: 100%;
-  width: 256px;
-  height: 256px;
-  overflow: hidden;
-  object-fit: cover;
-
-  grid-column: 1;
-  grid-row: 1;
-
-  /*@media (min-width: 768px) {
-    width: 256px;
-    height: 256px;
-  }*/
-`
-
-const StyledVideo = styled.video`
-  transition: filter 0.5s;
-  ${mediaStyle};
-`
+import styles from './VideoComponent.module.scss'
 
 interface Props {
   allowVideo: boolean
@@ -34,7 +13,8 @@ export default class VideoComponent extends Component<Props> {
 
   render() {
     return (
-      <StyledVideo
+      <video
+        className={styles.videoStyle}
         ref={this.videoRef}
         src={this.props.fullVideoSource}
         poster={this.props.staticImage}
@@ -42,7 +22,6 @@ export default class VideoComponent extends Component<Props> {
         playsInline={true}
         muted={true}
         preload={'none'}
-        className={'swiper-lazy'}
       />
     )
   }
