@@ -15,6 +15,7 @@
   import {loadCompileShaders} from "../../../lib/shaders/compileShader"
   import type {CustomizableMotionProject} from "../../../lib/motion-project/customizable-motion-project"
   import {get as Color} from "color-string"
+  import Timeline from "../../../lib/components/Timeline.svelte"
 
   export let project: CustomizableMotionProject
 
@@ -95,32 +96,40 @@
   <canvas class="background" bind:this={canvasRef} />
   <div class="inputs">
     {#each Object.entries(project.colors) as [name, value] (name)}
-      <pre>{name}</pre>
-      <input type="color" {name} {value} />
+      <fieldset>
+        <pre>{name}</pre>
+        <input type="color" {name} {value} />
+      </fieldset>
     {/each}
     <hr />
     {#each Object.entries(project.variations) as [name, value] (name)}
-      <pre>{name}</pre>
-      <input
-        type="number"
-        {name}
-        {value}
-        on:input={event => updateVariation(name, event.target.valueAsNumber)}
-      />
+      <fieldset>
+        <pre>{name}</pre>
+        <input
+          type="number"
+          {name}
+          {value}
+          on:input={event => updateVariation(name, event.target.valueAsNumber)}
+        />
+      </fieldset>
     {/each}
     <hr />
     {#each Object.entries(project.uniforms) as [name, value] (name)}
-      <pre>{name}</pre>
-      <input
-        class="draggable"
-        type="number"
-        on:mousedown={onMouseDown}
-        {name}
-        {value}
-        on:input={event => updateUniform(name, event.target.valueAsNumber)}
-      />
+      <fieldset>
+        <pre>{name}</pre>
+        <input
+          class="draggable"
+          type="number"
+          on:mousedown={onMouseDown}
+          {name}
+          {value}
+          on:input={event => updateUniform(name, event.target.valueAsNumber)}
+        />
+        <button>&bullet;</button>
+      </fieldset>
     {/each}
   </div>
+  <Timeline style="grid-column: 1 / span 2;" />
 </div>
 
 <style lang="scss">
@@ -136,9 +145,15 @@
     width: 100%;
   }
 
+  fieldset {
+    border: none;
+  }
+
   .inputs {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   input.draggable {

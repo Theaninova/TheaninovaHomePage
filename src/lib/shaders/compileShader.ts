@@ -12,6 +12,7 @@ export type FEATURES =
   | "invert"
   | "conical gradient"
   | "map range"
+  | "post bloom"
 
 export interface ShaderFeature {
   path: string
@@ -38,6 +39,7 @@ const FEATURES_MAP: Record<FEATURES, ShaderFeature> = {
   "invert": {path: "blender/material/gpu_shader_material_invert"},
   "conical gradient": {path: "conical_gradient"},
   "map range": {path: "map_range"},
+  "post bloom": {path: "post/bloom"},
 }
 
 export async function loadCompileShaders(
@@ -45,12 +47,11 @@ export async function loadCompileShaders(
   features: FEATURES[],
   defines: Record<string, number> = {},
 ) {
-  const shader = shaderSource.includes("\n") ? shaderSource : loadSingleShader(shaderSource)
   return `precision mediump float;\n${Object.entries({M_PI: Math.PI, ...defines})
     .map(([name, value]) => `#define ${name} ${value}`)
     .join("\n")}\n${await Promise.all(assembleRequirements(features).map(loadSingleShader)).then(it =>
     it.join("\n"),
-  )}\n${await shader}`
+  )}\n${shaderSource.includes("\n") ? shaderSource : await loadSingleShader(shaderSource)}`
 }
 
 /**

@@ -83,10 +83,22 @@ const project: CustomizableMotionProject = {
     thickness: 0.24,
     threshold: 0.02,
   },
+  animation: {
+    start: 0,
+    end: 6,
+    keyframes: [
+      {
+        start: 0,
+        end: 6,
+        easing: "linear",
+        uniforms: {infinite_spiral: 0},
+      },
+    ],
+  },
   fragmentShader,
   dependencies: ["sdf", "conical gradient", "map range"],
   render(shaderCanvas, time) {
-    const delta = (time / 2000) % 1
+    const delta = (time / 6000) % 1
 
     if (delta < 0.5) {
       interpolateUniforms(delta, 0.5, squashStart, squashEnd, shaderCanvas, sinInOut)

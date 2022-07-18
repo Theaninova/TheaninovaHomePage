@@ -5,7 +5,7 @@ export function get() {
     body: {
       projects: Object.entries(projects)
         .map(([key, value]) => ({
-          path: key.replace(/\.motion\.ts$/, ""),
+          path: key.replace(/\.motion\.ts$/, "").replace(/^\.\/projects\//, ""),
           ...value.default,
         }))
         .sort((a, b) => b.priority - a.priority),

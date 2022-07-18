@@ -11,5 +11,16 @@ export interface CustomizableMotionProject {
   fragmentShader: string
   description: string
   dependencies: FEATURES[]
+  animation?: {
+    start: number
+    end: number
+    keyframes: Array<{
+      start: number
+      end: number
+      easing: "linear" | "expoIn" | "expoOut" | "expoInOut" | "sinInOut"
+      uniforms?: Uniforms
+      colors?: Record<string, string>
+    }>
+  }
   render?: (shaderCanvas: ShaderCanvas, time: number) => void
 }
