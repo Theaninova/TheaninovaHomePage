@@ -1,0 +1,65 @@
+---
+title: Maximumtune.org
+description: Maximumtune.org is a website about Wangan Midnight Maximum Tune.
+---
+
+# Maximumtune.org
+
+Maximumtune.org was a site that had been run by my now girlfriend Lia for probably
+almost a decade.
+
+It was well-known and loved in the community (at least so I've heard), though
+mainly for the handy tools it had rather than the blogs.
+
+Because Lia didn't really have any experience in programming, the site used to be
+a bit of a mess fuled by Wordpress.
+
+We've since taken down the original version of course, but you can still get a
+snapshot of it on [Archive.org](https://web.archive.org/web/20211117071609/http://maximumtune.org/).
+
+![Old site](/posts/mmtorg/old_site.png)
+
+Really pretty much just a word press site, a little bit of a them, and *incredibly*
+slow. I have no idea why it was *that* slow, but it took absolute ages to get it to load.
+
+There were two main parts that people actually used:
+
+## The [Strength Aura Calculator](https://web.archive.org/web/20220314141124/http://maximumtune.org/index.php/tools-and-calculators/strength-aura-grade-calculator/)
+
+![Strength Aura Calculator](/posts/mmtorg/grade_old.png)
+
+Styles seem to be missing on the archived version, but it was mostly what you see now.
+
+Four input fields and then text output.
+
+## The [Time Attack Split Calculator](https://web.archive.org/web/20220307205041/http://maximumtune.org/index.php/tools-and-calculators/time-attack-split-calculator/)
+
+![Time Attack Split calculator](/posts/mmtorg/splits_old.png)
+
+Also styles are missing here, but a similar story to the other one.
+
+Very simple, but worked and made people's life easier.
+
+# The new site
+
+We decided to do a complete rewrite of the site, or well, I did the work of course
+but you get the idea.
+
+This time not using Wordpress, but SvelteKit together with the static adapter.
+
+I have very high quality standards, so I needed the site to both *look and feel* like
+it belongs to WMMT but also to perform exceptionally well, as well as provide
+users a superior experience from a purely functional standpoint.
+
+![New Site](/posts/mmtorg/screenshot_home_wide.png)
+
+There is a lot that goes into making a site fast. Usually it's not just one thing,
+but a bunch of optimizations combined.
+
+One of the things that I always like to do first is making sure all images that are
+permanently embedded in the site are correctly scaled and make use of the superior
+webp format. Additionally, I also really like inlining css & images if the image
+is small enough.
+
+That way you get no jumping around, no images loading in later, you just load the page
+and instantly get presented with the content.

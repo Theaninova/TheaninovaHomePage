@@ -1,0 +1,8 @@
+---
+title: Theaninova - About
+description: About Thea Schöbl
+---
+
+# About
+
+Hi, I'm Thea, and I do stuff (like this website for example)

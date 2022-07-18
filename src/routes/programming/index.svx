@@ -1,0 +1,34 @@
+---
+title: Theaninova - Programming
+description: Programming by Thea Schöbl
+---
+
+<script>
+  import Projects from "$lib/components/motion-project/Projects.svelte";
+
+  export let projects
+</script>
+
+# Programming
+
+*This is still under construction. For now, you can find my projects [on GitHub](https://github.com/Theaninova)*
+
+## Projects
+
+Here you can find longer descriptions of my projects.
+
+<p>
+  <Projects {projects} />
+</p>
+
+<img
+  src="https://github-readme-stats.vercel.app/api?username=Theaninova&count_private=true"
+  alt="Thea Schöbl's GitHub stats"
+/>
+<img
+  src="https://github-readme-stats.vercel.app/api/top-langs/?username=Theaninova&layout=compact&langs_count=30&hide=CMake,Makefile,HTML"
+  alt="Thea Schöbl's top programming languages"
+/>
+
+
+
