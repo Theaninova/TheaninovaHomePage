@@ -20,6 +20,8 @@
     "@sveltejs/kit": "1.0.0-next.366",
     "@typescript-eslint/eslint-plugin": "5.30.5",
     "@typescript-eslint/parser": "5.30.5",
+    "@types/color-string": "1.5.2",
+    "color-string": "1.9.1",
     "eslint": "8.19.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-svelte3": "4.0.0",

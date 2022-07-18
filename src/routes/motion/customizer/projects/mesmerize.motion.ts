@@ -17,6 +17,13 @@ uniform float thickness;
 
 uniform float threshold;
 
+uniform float gradient_start;
+uniform float gradient_end;
+
+uniform vec4 background;
+uniform vec4 inner;
+uniform vec4 outer;
+
 float spiralSdf(vec2 uv) {
   uv.y *= squash;
   uv = rotate(uv, infinite_spiral);
@@ -40,7 +47,9 @@ void main() {
   }
   sdf = float(sdf > threshold);
 
-  gl_FragColor = vec4(sdf, sdf, sdf, 1.0);
+  float gradient_mix = map_range(length(uv), gradient_start, gradient_end, 0.0, 1.0);
+
+  gl_FragColor = mix(mix(inner, outer, gradient_mix), background, sdf);
 }
 `
 
@@ -56,7 +65,14 @@ const project: CustomizableMotionProject = {
   variations: {
     spiral_iteration_count: 3,
   },
+  colors: {
+    background: "#000000",
+    outer: "#FF1C00",
+    inner: "#3d51ff",
+  },
   uniforms: {
+    gradient_start: 0.01,
+    gradient_end: 0.91,
     infinite_spiral: 291,
     squash: 2.458,
     scale: 1.5,
@@ -68,7 +84,7 @@ const project: CustomizableMotionProject = {
     threshold: 0.02,
   },
   fragmentShader,
-  dependencies: ["sdf", "conical gradient"],
+  dependencies: ["sdf", "conical gradient", "map range"],
   render(shaderCanvas, time) {
     const delta = (time / 2000) % 1
 

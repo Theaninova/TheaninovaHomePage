@@ -6,6 +6,7 @@ export interface CustomizableMotionProject {
   name: string
   priority: number
   uniforms: Uniforms
+  colors: Record<string, string>
   variations?: Record<string, number>
   fragmentShader: string
   description: string

@@ -11,6 +11,7 @@ export type FEATURES =
   | "color util"
   | "invert"
   | "conical gradient"
+  | "map range"
 
 export interface ShaderFeature {
   path: string
@@ -36,6 +37,7 @@ const FEATURES_MAP: Record<FEATURES, ShaderFeature> = {
   "color util": {path: "blender/material/gpu_shader_material_color_util"},
   "invert": {path: "blender/material/gpu_shader_material_invert"},
   "conical gradient": {path: "conical_gradient"},
+  "map range": {path: "map_range"},
 }
 
 export async function loadCompileShaders(

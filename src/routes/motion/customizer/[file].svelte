@@ -4,7 +4,6 @@
     return {
       props: {
         project,
-        file: params.file,
       },
     }
   }
@@ -15,17 +14,28 @@
   import {onMount} from "svelte"
   import {loadCompileShaders} from "../../../lib/shaders/compileShader"
   import type {CustomizableMotionProject} from "../../../lib/motion-project/customizable-motion-project"
+  import {get as Color} from "color-string"
 
   export let project: CustomizableMotionProject
 
   let shaderCanvas: ShaderCanvas
   let canvasRef: HTMLCanvasElement
 
-  onMount(async () => {
+  const createCanvas = async () => {
     shaderCanvas = new ShaderCanvas(canvasRef, {
-      uniforms: toStrictUniforms(project.uniforms),
+      uniforms: toStrictUniforms({
+        ...project.uniforms,
+        ...Object.entries(project.colors).reduce((accumulator, [key, value]) => {
+          accumulator[key] = Color(value).value.map((it, i) => (i === 3 ? it : it / 255))
+          return accumulator
+        }, {}),
+      }),
       frag: await loadCompileShaders(project.fragmentShader, project.dependencies, project.variations),
     })
+  }
+
+  onMount(async () => {
+    await createCanvas()
 
     const begin = performance.now()
     const animate = () => {
@@ -43,14 +53,14 @@
   })
 
   const updateVariation = async (name: string, value: number) => {
+    if (Number.isNaN(value)) return
     project.variations[name] = value
-    shaderCanvas = new ShaderCanvas(canvasRef, {
-      uniforms: toStrictUniforms(project.uniforms),
-      frag: await loadCompileShaders(project.fragmentShader, project.dependencies, project.variations),
-    })
+    await createCanvas()
   }
 
   const updateUniform = (name: string, value: number) => {
+    if (Number.isNaN(value)) return
+    project.uniforms[name] = value
     shaderCanvas.uniforms[name].value = looseToStrict(value).value
   }
 
@@ -84,6 +94,11 @@
 <div class="container" on:mousemove={onMouseMove} on:mouseup={onMouseUp}>
   <canvas class="background" bind:this={canvasRef} />
   <div class="inputs">
+    {#each Object.entries(project.colors) as [name, value] (name)}
+      <pre>{name}</pre>
+      <input type="color" {name} {value} />
+    {/each}
+    <hr />
     {#each Object.entries(project.variations) as [name, value] (name)}
       <pre>{name}</pre>
       <input
@@ -97,6 +112,7 @@
     {#each Object.entries(project.uniforms) as [name, value] (name)}
       <pre>{name}</pre>
       <input
+        class="draggable"
         type="number"
         on:mousedown={onMouseDown}
         {name}
@@ -125,7 +141,7 @@
     flex-direction: column;
   }
 
-  input {
+  input.draggable {
     cursor: e-resize;
   }
 
