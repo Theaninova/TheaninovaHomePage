@@ -1,6 +1,5 @@
 import type {CustomizableMotionProject} from "../../../../lib/motion-project/customizable-motion-project"
 import {interpolateUniforms, linear, sinInOut} from "../../../../lib/shaders/timeline"
-import type {StrictUniforms} from "../../../../lib/shaders/shaderCanvas"
 import {toStrictUniforms} from "../../../../lib/shaders/shaderCanvas"
 
 const fragmentShader = `

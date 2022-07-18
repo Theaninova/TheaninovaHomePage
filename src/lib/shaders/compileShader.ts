@@ -44,8 +44,7 @@ export async function loadCompileShaders(
   defines: Record<string, number> = {},
 ) {
   const shader = shaderSource.includes("\n") ? shaderSource : loadSingleShader(shaderSource)
-  defines.M_PI = Math.PI
-  return `precision mediump float;\n${Object.entries(defines)
+  return `precision mediump float;\n${Object.entries({M_PI: Math.PI, ...defines})
     .map(([name, value]) => `#define ${name} ${value}`)
     .join("\n")}\n${await Promise.all(assembleRequirements(features).map(loadSingleShader)).then(it =>
     it.join("\n"),

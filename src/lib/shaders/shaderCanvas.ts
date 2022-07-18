@@ -28,7 +28,7 @@ export type StrictUniforms = Record<string, StrictUniform>
 
 export type CompiledUniforms = Record<string, CompiledUniform>
 
-function looseToStrict(uniform: LooseUniformTypes, type?: UniformTypes): StrictUniform {
+export function looseToStrict(uniform: LooseUniformTypes, type?: UniformTypes): StrictUniform {
   const guessedType = type ?? guessUniformType(uniform)
   return {
     type: guessedType,
@@ -56,14 +56,7 @@ function guessUniformType(value: unknown): UniformTypes {
   throw new Error(`Couldn't guess uniform type of '${typeof value}'`)
 }
 
-const QUAD = new Float32Array([
-  -1, -1,
-  1, -1,
-  -1, 1,
-  -1, 1,
-  1, -1,
-  1, 1,
-])
+const QUAD = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1])
 
 export interface ShaderCanvasOptions {
   uniforms: StrictUniforms
