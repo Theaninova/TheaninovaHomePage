@@ -5,12 +5,19 @@
   export let to = 100
   export let time = 0
   export let tracks = {
-    test: {0: {value: 0}, 100: {value: 40}},
-    test3: {0: {value: 0}, 50: {value: 40}, 100: {value: 60}},
-    test4: {0: {value: 10}, 100: {value: 50}},
+    test: {0: {value: 0, interpolation: "linear"}, 100: {value: 40, interpolation: "linear"}},
+    spiral_iteration_count: {
+      0: {value: 0, interpolation: "expoOut"},
+      50: {value: 40, interpolation: "expoIn"},
+      100: {value: 60},
+    },
+    test4: {0: {value: 10, interpolation: "expoInOut"}, 100: {value: 50}},
   }
 
   $: duration = to - from
+
+  const widthLeft = 200
+  const padding = 16
 </script>
 
 <section class="timeline" {...$$restProps}>
@@ -25,9 +32,13 @@
     <input type="range" bind:this={cursor} min={from} max={to} bind:value={time} step="0.01" class="cursor" />
     {#each Object.entries(tracks) as [trackName, track]}
       <div class="track">
-        <div class="track-name">{trackName}</div>
+        <pre class="track-name" style="width: {widthLeft}px">{trackName}</pre>
         {#each Object.entries(track) as [time, value]}
-          <div class="keyframe" style="left: calc(72px + ({(time - from) / duration} * (100% - 88px)));" />
+          <div
+            class="keyframe {value.interpolation}"
+            style="left: calc({widthLeft + padding}px + ({(time - from) / duration} * (100% - {widthLeft +
+              2 * padding}px)));"
+          />
         {/each}
       </div>
     {/each}
@@ -49,16 +60,19 @@
     position: relative;
     width: 100%;
     display: flex;
-    height: 24px;
+    height: 32px;
   }
 
   .track:nth-child(odd) {
     background-color: grey;
   }
+  .track:nth-child(even) {
+    background-color: darkgray;
+  }
 
   .track-name {
     display: flex;
-    width: 56px;
+    margin: 0;
     height: 100%;
     align-items: center;
     justify-content: center;
@@ -71,12 +85,37 @@
     top: 50%;
     transform: translate(-50%, -50%);
 
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border: 2px black solid;
 
     border-radius: 50%;
     background-color: #ff4141;
+
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    &:global(.linear) {
+      border-radius: 0;
+      transform: translate(-50%, -50%) rotate(-45deg) scale(0.85);
+
+      &:hover {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+      }
+    }
+    &:global(.expoInOut) {
+      border-radius: 40%;
+    }
+    &:global(.expoIn) {
+      border-radius: 40% 0 0 40%;
+    }
+    &:global(.expoOut) {
+      border-radius: 0 40% 40% 0;
+    }
   }
 
   .timeline-controls {
